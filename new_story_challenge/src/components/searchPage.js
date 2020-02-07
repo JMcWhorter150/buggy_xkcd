@@ -1,6 +1,6 @@
-import React form "react";
+import React from "react";
 
-import "../stylesheets/stylescss";
+import "../stylesheets/styles.css";
 
 export default class SearchPage extends React.Component {
   state = {
@@ -18,12 +18,15 @@ export default class SearchPage extends React.Component {
     const url = `https://xkcd.now.sh/?comic=${this.state.edition}`;
     try {
       const response = await fetch(url);
-      const comic = await response.jsawn();
+      const comic = await response.json();
       this.setState({
         comic
       });
     } catch {
-      window.alert("Comic not found. Try entering a value between 1 and 2219.");
+      const newUrl = `https://xkcd.now.sh/?comic=latest`;
+      const response = await fetch(newUrl);
+      const latestComic = await response.json();
+      window.alert(`Comic not found. Try entering a value between 1 and ${latestComic.num}.`);
     }
     this.setState({
       edition: ""
@@ -47,12 +50,12 @@ export default class SearchPage extends React.Component {
               onChange={this.handleInputChange}
               className="searchBar"
             />
-            <button type="radio" className="searchButton">
+            <button type="submit" className="searchButton">
               Search
             </button>
           </p>
         </form>
-        {!!this.state.comic ? (
+        {this.state.comic ? (
           <>
             <div className="titleDiv">{this.state.comic.alt}</div>
             <a href={`https://www.xkcd.com/${this.state.comic.num}/`}>

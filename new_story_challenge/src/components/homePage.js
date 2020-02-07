@@ -19,7 +19,7 @@ export default class HomePage extends React.Component {
   render() {
     return (
       <div>
-        {this.loading || !this.comic ? (
+        {!this.comic ? (
           <div>loading...</div>
         ) : (
           <div>
@@ -31,8 +31,8 @@ export default class HomePage extends React.Component {
               className="latestImage"
             />
             <div className="timeStamp">
-              This comic was published on {this.state.comic.months},{" "}
-              {this.state.comic.day}, {this.state.comic.year}
+              This comic was published on {this.state.comic.month}/
+              {this.state.comic.day}/{this.state.comic.year}
             </div>
           </div>
         )}
